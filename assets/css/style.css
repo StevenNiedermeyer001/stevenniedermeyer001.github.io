@@ -5,6 +5,10 @@
   height: 300px;
 }
 
+canvas {
+  margin:0 auto;
+}
+
 h1 {
     text-align:center;
 }
