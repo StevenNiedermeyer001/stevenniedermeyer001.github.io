@@ -1,7 +1,7 @@
 const canvas = document.getElementById('canvas1');
 const ctx = canvas.getContext('2d');
 
-ctx.lineWidth = 5;
+ctx.lineWidth = 10;
 
 // Wall
 ctx.strokeRect(75, 140, 150, 110);
