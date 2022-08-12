@@ -1,45 +1,43 @@
 const canvas = document.getElementById('canvas1');
 const ctx = canvas.getContext('2d');
 
-ctx.lineWidth = 2;
+ctx.lineWidth = 4;
+ctx.fillStyle = 'purple';
+var currentX = 0;
+var currentY = 0;
 
-// Wall
-ctx.strokeRect(35, 100, 150, 110);
+function createRect()
+{
+    const path = new Path2D();
+    path.rect(135, 250, 30, 30);
+    return path;
+}
 
-// Door
-ctx.strokeRect(55, 120, 30, 90);
+const playerRect = createRect();
 
-//window
-ctx.strokeRect(115, 110, 50, 30);
-ctx.strokeRect(140, 110, 25, 30);
-ctx.strokeRect(115, 125, 50, 15);
+function strokePath(path, x, y, lineWidth = ctx.lineWidth, color = ctx.strokeStyle) { // defaults to current style
+    ctx.setTransform(1, 0, 0, 1, x, y);  // position the path so its (0,0) origin is at x,y
+    ctx.lineWidth = lineWidth;
+    ctx.strokeStyle = color;
+    ctx.stroke(path);
+}
 
-// Roof
-ctx.beginPath();
-ctx.moveTo(10, 100);
-ctx.lineTo(110, 60);
-ctx.lineTo(210, 100);
-ctx.closePath();
-ctx.stroke();
+strokePath(playerRect, currentX, currentY);
 
-//window in roof
-ctx.beginPath();
-ctx.arc(110, 80, 12, 0, 2 * Math.PI);
-ctx.stroke();
-ctx.beginPath();
-ctx.arc(110, 80, 8, 0, 2 * Math.PI);
-ctx.stroke();
+function move(e)
+{
+    if(e.keyCode == 37)
+    {
+        ctx.clearRect(0,0,canvas.width, canvas.height);
+        currentX = currentX - 10;
+        strokePath(playerRect, currentX, currentY);
+    }
+    if(e.keyCode == 39)
+    {
+        ctx.clearRect(0,0,canvas.width, canvas.height);
+        currentX = currentX + 10;
+        strokePath(playerRect, currentX, currentY);
+    }
+}
 
-//sun
-ctx.beginPath();
-ctx.arc(5, 5, 50, 0, 2 * Math.PI);
-ctx.stroke();
-
-//doggo
-
-//rays
-ctx.beginPath();
-ctx.moveTo(5, 55);
-ctx.lineTo(8, 60);
-ctx.closePath();
-ctx.stroke();
+document.onkeydown = move;
